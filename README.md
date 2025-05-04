@@ -1,2 +1,2 @@
 # CustomRemote
-MQTT based virtual remote, to control linux system with phone
+MQTT based virtual remote, to control my linux entertainment system with my android phone
