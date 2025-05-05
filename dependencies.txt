@@ -1,0 +1,3 @@
+paho-mqtt
+subprocess
+webbrowser (only in windows)

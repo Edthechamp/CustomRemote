@@ -1,24 +1,31 @@
 import paho.mqtt.client as mqtt
-import webbrowser
+import subprocess
 print("Starting MQTT client...")
 
 def on_connect(client, userdata, flags, rc):
     print("connected")
     client.subscribe("home/media")
+    client.subscribe("controls/basic")
 
-
+#for windows
 def message(client, userdata, msg):
     command = msg.payload.decode()
-    print(f"Received command: {command}")
+    if msg.topic == "home/media":
+        media(command)
+    elif msg.topic == "controls/basic":
+        controls(command)
+
+def media(command):
     if command == "netflix":
         print("Opening Netflix")
-        webbrowser.open("https://www.netflix.com")
-        #replace iwth launch script on linux
+        subprocess.run(['firefox','-kiosk','netflix.com'])
     elif command == "youtube":
         print("Opening YouTube")
-        webbrowser.open("https://www.youtube.com")
-        #replace iwth launch script on linux
-        
+        subprocess.run(['firefox',"https://www.youtube.com"])
+
+def controls(command):
+    subprocess.run(['xdotool', 'key', command])
+    print(f"Key {command} pressed")
 
 #publishing client is phone with mqtt app
 
